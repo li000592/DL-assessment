@@ -25,6 +25,8 @@ REACT_APP_FIREBASE_MEASUREMENTID = "G-XF6FD6GG6W"
 
 ### Step 2: `npm install`
 
+Install the dependencies in the local `node_modules` folder.
+
 ### Step 3: `npm start`
 
 Runs the app in the development mode.\
