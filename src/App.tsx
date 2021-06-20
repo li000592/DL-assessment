@@ -5,8 +5,9 @@ import { useFirestoreDocData, useFirestore } from "reactfire"
 import "firebase/firestore"
 
 import Header from "./components/Header"
-import Post from "./components/Posts"
+import PostList from "./components/PostList"
 import { isDay } from "./utils/convertTools"
+import { light, dark } from "./styles/theme"
 
 function App() {
   const foodReviewsRef = useFirestore().collection("foodreview").doc("reviews")
@@ -19,7 +20,10 @@ function App() {
     setTheme(isDay())
   }, [])
 
-  if (status === "error") <h5>Some errors while fetching data...</h5>
+  if (status === "error")
+    <Typography align='center' variant='h5'>
+      Some errors while fetching data...
+    </Typography>
   return (
     <ThemeProvider theme={appliedTheme}>
       <Header setTheme={setTheme} theme={theme} />
@@ -28,21 +32,10 @@ function App() {
           Loading...
         </Typography>
       ) : (
-        <Post reviewData={data.posts} />
+        <PostList reviewData={data.posts} />
       )}
     </ThemeProvider>
   )
 }
 
 export default App
-
-export const light: object = {
-  palette: {
-    type: "light",
-  },
-}
-export const dark: object = {
-  palette: {
-    type: "dark",
-  },
-}
