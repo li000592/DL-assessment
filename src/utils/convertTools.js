@@ -12,7 +12,6 @@ function randomColourString() {
 }
 // codes from https://css-tricks.com/snippets/javascript/random-hex-color/
 
-// codes form https://stackoverflow.com/questions/3177836/how-to-format-time-since-xxx-e-g-4-minutes-ago-similar-to-stack-exchange-site
 function timeConverter(time) {
   return Date(time).slice(0, 21)
 }
