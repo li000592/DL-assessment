@@ -1,34 +1,48 @@
-import React from "react"
+import React, { useState } from "react"
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
+import Typography from "@material-ui/core/Typography"
 import { useFirestoreDocData, useFirestore } from "reactfire"
 import "firebase/firestore"
 
-interface Data {
-  yummy: any
-}
-function Burrito() {
-  // easily access the Firestore library
-  const burritoRef = useFirestore().collection("tryreactfire").doc("burrito")
-  //const reviewPostRef = useFirestore().collection("reviewposts").doc("post")
-  // subscribe to a document for realtime updates. just one line!
-  const { status, data } = useFirestoreDocData<Data>(burritoRef)
-  //const { status, data } = useFirestoreDocData<Data>(reviewPostRef)
-  console.log(data)
-
-  // easily check the loading status
-  if (status === "loading") {
-    return <p>Fetching burrito flavor...</p>
-  }
-
-  return <p>The burrito is {data.yummy ? "good" : "bad"}!</p>
-}
+import Header from "./components/Header"
+import Post from "./components/Posts"
+import { isDay } from "./utils/convertTools"
 
 function App() {
+  const foodReviewsRef = useFirestore().collection("foodreview").doc("reviews")
+  const { status, data } = useFirestoreDocData<any>(foodReviewsRef)
+
+  const [theme, setTheme] = useState<boolean>(true)
+  const appliedTheme = createMuiTheme(theme ? light : dark)
+
+  React.useEffect(() => {
+    setTheme(isDay())
+  }, [])
+
+  if (status === "error") <h5>Some errors while fetching data...</h5>
   return (
-    <>
-      <h1>🌯</h1>
-      <Burrito />
-    </>
+    <ThemeProvider theme={appliedTheme}>
+      <Header setTheme={setTheme} theme={theme} />
+      {status === "loading" ? (
+        <Typography align='center' variant='h5'>
+          Loading...
+        </Typography>
+      ) : (
+        <Post reviewData={data.posts} />
+      )}
+    </ThemeProvider>
   )
 }
 
 export default App
+
+export const light: object = {
+  palette: {
+    type: "light",
+  },
+}
+export const dark: object = {
+  palette: {
+    type: "dark",
+  },
+}
