@@ -13,6 +13,19 @@ function randomColourString() {
 // codes from https://css-tricks.com/snippets/javascript/random-hex-color/
 
 function timeConverter(time) {
-  return Date(time).slice(0, 21)
+  return new Date(time * 1000).toUTCString().slice(0, 22)
 }
-export { isDay, fullNameToNameInitials, randomColourString, timeConverter }
+
+function queryFilter(array, key) {
+  return array.filter((element) => {
+    return Object.values(element).some((s) =>
+      typeof s === "object"
+        ? timeConverter(s.seconds).toLowerCase().includes(key.toLowerCase())
+        : ("" + s).toLowerCase().includes(key.toLowerCase())
+    )
+  })
+}
+function sortArrayByCreateDay(data) {
+  return data.sort((a, b) => b.createAt.seconds - a.createAt.second)
+}
+export { isDay, fullNameToNameInitials, randomColourString, timeConverter, queryFilter, sortArrayByCreateDay }

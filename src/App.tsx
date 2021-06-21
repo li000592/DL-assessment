@@ -1,6 +1,8 @@
 import React, { useState } from "react"
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles"
 import Typography from "@material-ui/core/Typography"
+import CircularProgress from "@material-ui/core/CircularProgress"
+import Container from "@material-ui/core/Container"
 import { useFirestoreDocData, useFirestore } from "reactfire"
 import "firebase/firestore"
 
@@ -12,7 +14,7 @@ import { light, dark } from "./styles/theme"
 function App() {
   const foodReviewsRef = useFirestore().collection("foodreview").doc("reviews")
   const { status, data } = useFirestoreDocData<any>(foodReviewsRef)
-
+  const [query, setQuery] = useState("")
   const [theme, setTheme] = useState<boolean>(true)
   const appliedTheme = createMuiTheme(theme ? light : dark)
 
@@ -26,14 +28,14 @@ function App() {
     </Typography>
   return (
     <ThemeProvider theme={appliedTheme}>
-      <Header setTheme={setTheme} theme={theme} />
-      {status === "loading" ? (
-        <Typography align='center' variant='h5'>
-          Loading...
-        </Typography>
-      ) : (
-        <PostList reviewData={data.posts} />
-      )}
+      <Header setTheme={setTheme} theme={theme} setQuery={setQuery} />
+      <Container maxWidth='md'>
+        {status === "loading" ? (
+          <CircularProgress className='loader' />
+        ) : (
+          <PostList query={query} reviewData={data.posts} />
+        )}
+      </Container>
     </ThemeProvider>
   )
 }
