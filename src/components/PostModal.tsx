@@ -8,7 +8,6 @@ import { Post } from "../interface"
 
 export default function PostModal(props: { post: Post; avatarColourString: string }) {
   const { post, avatarColourString } = props
-  const [modalStyle] = React.useState(getModalStyle)
   const classes = useStyles()
   return (
     <div style={getModalStyle()} className={classes.paper}>
@@ -27,13 +26,9 @@ export default function PostModal(props: { post: Post; avatarColourString: strin
 }
 
 function getModalStyle() {
-  const top = 25
-  const left = 25
-
+  const top = 20
   return {
     top: `${top}%`,
     margin: "auto",
-    // left: `${left}%`,
-    // transform: `translate(-${top}%, -${left}%)`,
   }
 }
