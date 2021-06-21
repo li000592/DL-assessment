@@ -7,6 +7,10 @@
 - Material UI
 - Reactfire
 
+## Development APP:
+
+Netlify: [https://dl-assessment.netlify.app/](https://dl-assessment.netlify.app/)
+
 ## Run the App
 
 ### Step 1: Set firebase config
