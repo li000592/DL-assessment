@@ -11,7 +11,7 @@ export default function PostModal(props: { post: Post; avatarColourString: strin
   const [modalStyle] = React.useState(getModalStyle)
   const classes = useStyles()
   return (
-    <div style={modalStyle} className={classes.paper}>
+    <div style={getModalStyle()} className={classes.paper}>
       <div className={classes.modalHeader}>
         <h2 id='simple-modal-title'>{post.name}</h2>
         <Avatar alt='Profile Picture' style={{ backgroundColor: avatarColourString }}>
@@ -26,17 +26,14 @@ export default function PostModal(props: { post: Post; avatarColourString: strin
   )
 }
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10
-}
-
 function getModalStyle() {
-  const top = 50 + rand()
-  const left = 50 + rand()
+  const top = 25
+  const left = 25
 
   return {
     top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
+    margin: "auto",
+    // left: `${left}%`,
+    // transform: `translate(-${top}%, -${left}%)`,
   }
 }

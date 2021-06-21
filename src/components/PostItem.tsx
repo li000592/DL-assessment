@@ -35,7 +35,6 @@ export default function PostItem(props: { post: Post }) {
         </ListItemAvatar>
         <ListItemText primary={post.name} secondary={description} />
       </ListItem>
-      ]
       <Modal
         open={open}
         onClose={handleClose}
@@ -46,6 +45,7 @@ export default function PostItem(props: { post: Post }) {
         BackdropProps={{
           timeout: 500,
         }}
+        style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
       >
         <PostModal post={post} avatarColourString={avatarColourString} />
       </Modal>
